@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume Builder</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- calling Libraries-->
+  <!-- Required JS Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://unpkg.com/html-docx-js/dist/html-docx.js"></script>
+</head>
+
+<body>
+  
+
+
+  <div class="form-container">
+
+    <!--shows the user’s name and allows them to switch or create resumes-->
+    <div id="resumeHeader" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <h2 id="userWelcome" style="margin: 0;"></h2>
+  <div>
+    <select id="resumeSelector" style="padding: 6px 10px; margin-right: 10px;"></select>
+    <button onclick="createNewResume()">+ New Resume</button>
+  </div>
+</div>
+
+
+    <form id="resumeForm" action="/generateResume" method="post">
+
+      <!-- Step 1: Personal Info -->
+      <div class="form-step active">
+        <h2>Personal Information</h2>
+        <input type="text" name="fullName" placeholder="Full Name" required>
+        <input type="text" name="phone" placeholder="Phone Number" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="url" name="linkedin" placeholder="LinkedIn Profile">
+        <input type="url" name="github" placeholder="GitHub Profile">
+        <input type="url" name="portfolio" placeholder="Portfolio Website link">
+        <div class="buttons">
+          <button type="button" id="nextBtn1" onclick="nextStep()" disabled>Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Education -->
+      <div class="form-step">
+        <h2>Education</h2>
+        <input type="text" name="college" placeholder="College Name" required>
+        <input type="text" name="degree" placeholder="Degree / Branch" required>
+        <input type="text" name="edu-duration" placeholder="Duration (e.g., 11/2022 – 05/2026)" required>
+        <input type="text" name="cgpa" placeholder="CGPA (e.g., 8.96/10)">
+        <div class="buttons">
+          <button type="button" onclick="prevStep()">Back</button>
+          <button type="button" id="nextBtn2" onclick="nextStep()" disabled>Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Skills -->
+      <div class="form-step">
+        <h2>Technical Skills</h2>
+        <input type="text" name="languages" placeholder="Programming Languages (comma separated)" required>
+        <input type="text" name="web" placeholder="Web Technologies (comma separated)" required>
+        <input type="text" name="core" placeholder="Core CS Subjects (comma separated)" required>
+        <input type="text" name="tools" placeholder="Tools & Deployment (comma separated)" required>
+        <div class="buttons">
+          <button type="button" onclick="prevStep()">Back</button>
+          <button type="button" id="nextBtn3" onclick="nextStep()" disabled>Next</button>
+        </div>
+      </div>
+
+      <!-- Step: Work Experience -->
+      <div class="form-step" id="step-work">
+        <h2>Work Experience</h2>
+        <div id="workExperienceContainer"></div>
+        <div class="buttons">
+          <button type="button" onclick="prevStep()">Back</button>
+          <button type="button" onclick="addWorkExperience()">Add Experience</button>
+          <button type="button" onclick="nextStep()">Skip</button>
+          <button type="button" id="nextBtn4" onclick="nextStep()" disabled>Next</button>
+        </div>
+      </div>
+
+      <!-- Step: Projects -->
+      <div class="form-step" id="step-projects">
+        <h2>Projects</h2>
+        <div id="projectsContainer"></div>
+        <div class="buttons">
+          <button type="button" onclick="prevStep()">Back</button>
+          <button type="button" onclick="addProject()">Add Project</button>
+          <button type="button" onclick="nextStep()">Skip</button>
+          <button type="button" id="nextBtn5" onclick="nextStep()" disabled>Next</button>
+        </div>
+      </div>
+
+      <!-- Step: Achievements & Certifications -->
+      <div class="form-step">
+        <h2>Achievements & Certifications</h2>
+        <textarea name="achievements" rows="6" placeholder="List achievements and course certifications with details"></textarea>
+        <div class="buttons">
+          <button type="button" onclick="prevStep()">Back</button>
+          <button type="button" onclick="resumePreview(); ">Generate Preview</button>
+          <div id="downloadButtons" style="text-align: center; margin-top: 20px;">
+                <button type="button" onclick="downloadPDF()">Download as PDF</button>
+                 <button type="button" onclick="downloadWord()">Download as Word</button>
+                 <button onclick="uploadAndSendToSheet();">Send to Sheet</button>
+          </div>
+
+      </div>
+      
+    </form>
+    <div id="resumePreview">
+            <h1 id="name">Your Name</h1>
+            <p id="contact" class="contact-line"></p>
+            <h2>Education</h2>
+            <p id="educationBlock"></p>
+
+            <h2>Technical Skills</h2>
+          <ul>
+            <li id="skillLang"></li>
+            <li id="skillWeb"></li>
+            <li id="skillCore"></li>
+            <li id="skillTools"></li>
+          </ul>
+        
+          <h2>Work Experience</h2>
+          <div id="experienceSection"></div>
+        
+          <h2>Projects</h2>
+          <div id="projectSection"></div>
+
+          <h2>Achievements & Certifications</h2>
+          <p id="achievementBlock"></p>
+                </div>
+          </div>
+
+    <button onclick="logoutUser()">Logout</button>
+
+    <script src="https://unpkg.com/html-docx-js/dist/html-docx.js"></script>
+
+  <script type="module" src="script.js"></script>
+
+</body>
+</html>

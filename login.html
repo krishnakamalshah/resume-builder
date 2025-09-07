@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Resume Builder</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h2>Login</h2>
+
+    <!-- Google Sign-In -->
+    <button id="googleSignInBtn">Sign in with Google</button>
+    <hr style="margin: 15px 0;" />
+
+    <!-- Email/Password Login -->
+    <input type="email" id="loginEmail" placeholder="Email" required>
+    <input type="password" id="loginPassword" placeholder="Password" required>
+    <button id="loginBtn">Login</button>
+
+    <p>Don't have an account? <a href="#" onclick="document.getElementById('signupSection').style.display='block'">Sign Up</a></p>
+
+    <!-- Signup -->
+    <div id="signupSection" style="display:none;">
+      <h2>Sign Up</h2>
+      <input type="email" id="signupEmail" placeholder="Email" required>
+      <input type="password" id="signupPassword" placeholder="Password" required>
+      <button id="signupBtn">Sign Up</button>
+    </div>
+  </div>
+
+  <!-- Firebase Setup -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      GoogleAuthProvider,
+      signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBIHzPoVYOcFwCtab3UDWJLlK0YYa2HL_Y",
+      authDomain: "my-resume-builder-61766.firebaseapp.com",
+      projectId: "my-resume-builder-61766",
+      storageBucket: "my-resume-builder-61766.firebasestorage.app",
+      messagingSenderId: "698820841364",
+      appId: "1:698820841364:web:c4994a8ce5759d7ddfc981",
+      measurementId: "G-P0WB7SWHML"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Login with Email/Password
+    document.getElementById("loginBtn").onclick = () => {
+      const email = document.getElementById("loginEmail").value;
+      const pass = document.getElementById("loginPassword").value;
+      signInWithEmailAndPassword(auth, email, pass)
+        .then(() => window.location.href = "index.html")
+        .catch(err => alert("Login failed: " + err.message));
+    };
+
+    // Signup with Email/Password
+    document.getElementById("signupBtn").onclick = () => {
+      const email = document.getElementById("signupEmail").value;
+      const pass = document.getElementById("signupPassword").value;
+      createUserWithEmailAndPassword(auth, email, pass)
+        .then(() => alert("Signup successful! You can now login."))
+        .catch(err => alert("Signup failed: " + err.message));
+    };
+
+    // Google Sign-In
+    document.getElementById("googleSignInBtn").onclick = () => {
+      signInWithPopup(auth, provider)
+        .then(result => {
+          const user = result.user;
+          console.log("Google user:", user.displayName);
+          window.location.href = "index.html";
+        })
+        .catch(err => alert("Google sign-in error: " + err.message));
+    };
+  </script>
+</body>
+</html>

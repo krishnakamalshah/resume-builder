@@ -1,0 +1,20 @@
+<script type="module">
+  // Firebase Imports
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBIHzPoVYOcFwCtab3UDWJLlK0YYa2HL_Y",
+    authDomain: "my-resume-builder-61766.firebaseapp.com",
+    projectId: "my-resume-builder-61766",
+    storageBucket: "my-resume-builder-61766.firebasestorage.app",
+    messagingSenderId: "698820841364",
+    appId: "1:698820841364:web:c4994a8ce5759d7ddfc981",
+    measurementId: "G-P0WB7SWHML"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Auth logic (login, signup, redirect)
+</script>
